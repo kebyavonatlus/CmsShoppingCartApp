@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using CmsShoppingCart.Models;
 
 namespace CmsShoppingCart.Areas.Admin.Controllers
 {
@@ -27,7 +28,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             return View(pagesList);
         }
 
-        // GET /admin/details/1
+        // GET /admin/pages/details/1
         public async Task<IActionResult> Details(int id)
         {
             var page = await _context.Pages.FindAsync(id);
@@ -35,6 +36,35 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             if (page == null)
             {
                 return NotFound();
+            }
+
+            return View(page);
+        }
+
+        // GET /admin/pages/create
+        public IActionResult Create() => View();
+
+        // POST /admin/create
+        [HttpPost]
+        public async Task<IActionResult> Create(Page page)
+        {
+            if (ModelState.IsValid)
+            {
+                page.Slug = page.Title.ToLower().Replace(" ", "-");
+                page.Sorting = 100;
+
+                var slug = await _context.Pages.FirstOrDefaultAsync(x => x.Slug == page.Slug);
+
+                if (slug != null)
+                {
+                    ModelState.AddModelError("", "The title already exists.");
+                    return View(page);
+                }
+
+                _context.Add(page);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction("Index");
             }
 
             return View(page);
