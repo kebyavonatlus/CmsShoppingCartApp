@@ -134,7 +134,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
         }
 
         // POST /admin/pages/reorder
-
+        [HttpPost]
         public async Task<IActionResult> Reorder(int[] id)
         {
             int count = 1;
