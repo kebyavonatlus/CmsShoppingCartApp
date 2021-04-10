@@ -11,8 +11,8 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <input type="hidden" asp-for="Id"/>
-            <input type="hidden" asp-for="Sorting"/>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Sorting" />
 
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
@@ -39,4 +39,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        CKEDITOR.replace("Content");
+    </script>
 }
