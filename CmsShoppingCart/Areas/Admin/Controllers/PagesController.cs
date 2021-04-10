@@ -15,6 +15,7 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             _context = context;
         }
 
+        // GET /admin/pages
         public async Task<IActionResult> Index()
         {
             var pages = from p in _context.Pages
@@ -24,6 +25,19 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             var pagesList = await pages.ToListAsync();
 
             return View(pagesList);
+        }
+
+        // GET /admin/details/1
+        public async Task<IActionResult> Details(int id)
+        {
+            var page = await _context.Pages.FindAsync(id);
+
+            if (page == null)
+            {
+                return NotFound();
+            }
+
+            return View(page);
         }
     }
 }
