@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="wwwroot\media\products\" />
   </ItemGroup>
 
 </Project>
