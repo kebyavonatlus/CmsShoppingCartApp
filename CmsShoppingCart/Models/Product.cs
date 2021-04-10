@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CmsShoppingCart.Infrastructure;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,11 +24,16 @@ namespace CmsShoppingCart.Models
         [Column(TypeName = "DECIMAL(18,2)")]
         public decimal Price { get; set; }
 
+        [Display(Name = "Category")]
+        [Range(1, int.MaxValue, ErrorMessage = "You must choose a category")]
         public int CategoryId { get; set; }
-
         public string Image { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
+
+        [FileExtension]
+        [NotMapped]
+        public IFormFile ImageUpload { get; set; }
     }
 }
