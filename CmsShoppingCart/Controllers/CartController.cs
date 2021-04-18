@@ -48,8 +48,8 @@ namespace CmsShoppingCart.Controllers
             }
 
             HttpContext.Session.SetJson("Cart", cart);
-            
-            if (HttpContext.Request.Headers["X-Requested-With"] != "XMLHttpRequest") 
+
+            if (HttpContext.Request.Headers["X-Requested-With"] != "XMLHttpRequest")
                 return RedirectToAction("Index");
 
             return ViewComponent("SmallCart");
@@ -107,7 +107,10 @@ namespace CmsShoppingCart.Controllers
         {
             HttpContext.Session.Remove("Cart");
 
-            return Redirect(Request.Headers["Referer"].ToString());
+            if (HttpContext.Request.Headers["X-Requested-With"] != "XMLHttpRequest")
+                return Redirect(Request.Headers["Referer"].ToString());
+
+            return Ok();
         }
     }
 }
