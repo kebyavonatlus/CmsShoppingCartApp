@@ -25,7 +25,7 @@ namespace CmsShoppingCart
             {
                 SeedData.Initialize(services);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 throw;
             }
