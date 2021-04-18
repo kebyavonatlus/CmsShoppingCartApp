@@ -88,7 +88,7 @@ namespace CmsShoppingCart.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("DECIMAL(18,2)");
+                        .HasColumnType("NUMERIC(18,2)");
 
                     b.Property<string>("Slug")
                         .HasColumnType("nvarchar(max)");

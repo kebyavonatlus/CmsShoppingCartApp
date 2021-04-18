@@ -21,7 +21,7 @@ namespace CmsShoppingCart.Models
         [Required, MinLength(4, ErrorMessage = "Minimum length is 4")]
         public string Description { get; set; }
 
-        [Column(TypeName = "DECIMAL(18,2)")]
+        [Column(TypeName = "NUMERIC(18,2)")]
         public decimal Price { get; set; }
 
         [Display(Name = "Category")]
