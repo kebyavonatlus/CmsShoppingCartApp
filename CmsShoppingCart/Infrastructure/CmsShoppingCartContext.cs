@@ -1,10 +1,9 @@
 ﻿using CmsShoppingCart.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CmsShoppingCart.Infrastructure
 {
-    public class CmsShoppingCartContext : IdentityDbContext<User>
+    public class CmsShoppingCartContext : DbContext
     {
         public CmsShoppingCartContext(DbContextOptions<CmsShoppingCartContext> options) : base (options)
         {
