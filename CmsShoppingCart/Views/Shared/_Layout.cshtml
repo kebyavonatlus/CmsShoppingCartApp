@@ -21,6 +21,9 @@
                         @if (User?.Identity?.IsAuthenticated ?? false)
                         {
                             <li class="nav-item">
+                                <a asp-controller="Account" asp-action="Edit" class="btn btn-primary">My Account</a>
+                            </li>
+                            <li class="nav-item ml-1">
                                 <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Hi, @User.Identity.Name, Logout</a>
                             </li>
                         }

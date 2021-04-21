@@ -98,5 +98,14 @@ namespace CmsShoppingCart.Controllers
 
             return Redirect("/");
         }
+
+        //GET /account/edit
+        public async Task<IActionResult> Edit()
+        {
+            var appUser = await userManger.FindByNameAsync(User.Identity.Name);
+            var user = new User(appUser);
+
+            return View(user);
+        }
     }
 }
