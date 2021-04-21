@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CmsShoppingCart.Infrastructure
 {
-    public class CmsShoppingCartContext : IdentityDbContext
+    public class CmsShoppingCartContext : IdentityDbContext<AppUser>
     {
         public CmsShoppingCartContext(DbContextOptions<CmsShoppingCartContext> options) : base (options)
         {

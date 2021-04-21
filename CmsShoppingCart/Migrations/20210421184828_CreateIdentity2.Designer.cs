@@ -4,14 +4,16 @@ using CmsShoppingCart.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CmsShoppingCart.Migrations
 {
     [DbContext(typeof(CmsShoppingCartContext))]
-    partial class CmsShoppingCartContextModelSnapshot : ModelSnapshot
+    [Migration("20210421184828_CreateIdentity2")]
+    partial class CreateIdentity2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
