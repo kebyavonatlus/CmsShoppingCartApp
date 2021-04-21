@@ -2,7 +2,7 @@
 
 namespace CmsShoppingCart.Models
 {
-    public class AspUser : IdentityUser
+    public class AppUser : IdentityUser
     {
         public string Occupation { get; set; }
     }
