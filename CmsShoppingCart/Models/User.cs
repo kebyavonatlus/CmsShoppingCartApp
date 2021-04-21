@@ -15,11 +15,5 @@ namespace CmsShoppingCart.Models
         public string Password { get; set; }
 
         public User() { }
-        public User(AppUser appUser)
-        {
-            UserName = appUser.UserName;
-            Email = appUser.Email;
-            Password = appUser.PasswordHash;
-        }
     }
 }

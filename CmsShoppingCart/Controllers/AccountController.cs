@@ -14,11 +14,15 @@ namespace CmsShoppingCart.Controllers
     {
         private readonly UserManager<AppUser> userManger;
         private readonly SignInManager<AppUser> signInManager;
+        private IPasswordHasher<AppUser> passwordHasher;
 
-        public AccountController(UserManager<AppUser> userManger, SignInManager<AppUser> signInManager)
+        public AccountController(UserManager<AppUser> userManger,
+                                SignInManager<AppUser> signInManager,
+                                IPasswordHasher<AppUser> passwordHasher)
         {
             this.userManger = userManger;
             this.signInManager = signInManager;
+            this.passwordHasher = passwordHasher;
         }
 
         //GET /account/register
@@ -103,9 +107,33 @@ namespace CmsShoppingCart.Controllers
         public async Task<IActionResult> Edit()
         {
             var appUser = await userManger.FindByNameAsync(User.Identity.Name);
-            var user = new User(appUser);
+            var user = new UserEdit(appUser);
 
             return View(user);
+        }
+
+        //POST /account/edit
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(UserEdit userEdit)
+        {
+            var appUser = await userManger.FindByNameAsync(User.Identity.Name);
+
+            if (ModelState.IsValid)
+            {
+                appUser.Email = userEdit.Email;
+                if (userEdit.Password != null)
+                {
+                    appUser.PasswordHash = passwordHasher.HashPassword(appUser, userEdit.Password);
+                }
+
+                var result = await userManger.UpdateAsync(appUser);
+                if (result.Succeeded)
+                    TempData["Success"] = "Your information has been edited!";
+            }
+
+            return View();
         }
     }
 }
