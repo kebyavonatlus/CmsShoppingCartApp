@@ -18,12 +18,21 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1 justify-content-end">
-                        <li class="nav-item">
-                            <a asp-controller="Account" asp-action="Login" class="btn btn-success">Login</a>
-                        </li>
-                        <li class="nav-item ml-1">
-                            <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Register</a>
-                        </li>
+                        @if (User?.Identity?.IsAuthenticated ?? false)
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Hi, @User.Identity.Name, Logout</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a asp-controller="Account" asp-action="Login" class="btn btn-success">Login</a>
+                            </li>
+                            <li class="nav-item ml-1">
+                                <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Register</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav flex-grow-1">
                         @await Component.InvokeAsync("MainMenu")
@@ -38,7 +47,7 @@
                 <div class="col-3">
                     @await Component.InvokeAsync("Categories")
 
-                    <div class="smallcart bg-success mt-3 p-3 text-white" >
+                    <div class="smallcart bg-success mt-3 p-3 text-white">
                         @await Component.InvokeAsync("SmallCart")
                     </div>
                 </div>

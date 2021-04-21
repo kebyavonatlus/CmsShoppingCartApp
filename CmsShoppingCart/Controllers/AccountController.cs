@@ -13,10 +13,12 @@ namespace CmsShoppingCart.Controllers
     public class AccountController : Controller
     {
         private readonly UserManager<AppUser> userManger;
+        private readonly SignInManager<AppUser> signInManager;
 
-        public AccountController(UserManager<AppUser> userManger)
+        public AccountController(UserManager<AppUser> userManger, SignInManager<AppUser> signInManager)
         {
             this.userManger = userManger;
+            this.signInManager = signInManager;
         }
 
         //GET /account/register
@@ -65,6 +67,36 @@ namespace CmsShoppingCart.Controllers
             };
 
             return View(login);
+        }
+
+        //POST /account/login
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Login(Login login)
+        {
+            if (ModelState.IsValid)
+            {
+                var appUser = await userManger.FindByEmailAsync(login.Email);
+                if (appUser != null)
+                {
+                    var result = await signInManager.PasswordSignInAsync(appUser, login.Password, false, false);
+
+                    if (result.Succeeded)
+                        return Redirect(login.ReturnUrl ?? "/");
+                }
+                ModelState.AddModelError("", "Login failed, wrong credentials");
+            }
+
+            return View(login);
+        }
+
+        //GET /account/logout
+        public async Task<IActionResult> Logout()
+        {
+            await signInManager.SignOutAsync();
+
+            return Redirect("/");
         }
     }
 }
