@@ -50,5 +50,48 @@ namespace CmsShoppingCart.Areas.Admin.Controllers
             ModelState.AddModelError("", "Minimum length is 2");
             return View();
         }
+
+        // GET /admin/roles/edit/1
+        public async Task<IActionResult> Edit(string id)
+        {
+            var role = await roleManager.FindByIdAsync(id);
+
+            var members = new List<AppUser>();
+            var nonMembers = new List<AppUser>();
+
+            foreach (var user in userManager.Users)
+            {
+                var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
+                list.Add(user);
+            }
+
+            return View(new RoleEdit { 
+                Role = role,
+                Members = members,
+                NonMembers = nonMembers
+            });
+        }
+
+        // POST /admin/roles/edit/1
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(RoleEdit roleEdit)
+        {
+            IdentityResult result;
+
+            foreach (var userId in roleEdit.AddIds ?? new string[] { })
+            {
+                var user = await userManager.FindByIdAsync(userId);
+                result = await userManager.AddToRoleAsync(user, roleEdit.RoleName);
+            }
+
+            foreach (var userId in roleEdit.DeleteIds ?? new string[] { })
+            {
+                var user = await userManager.FindByIdAsync(userId);
+                result = await userManager.RemoveFromRoleAsync(user, roleEdit.RoleName);
+            }
+
+            return Redirect(Request.Headers["Referer"].ToString());
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace CmsShoppingCart.Controllers
         // GET /products
         public async Task<IActionResult> Index(int p = 1)
         {
+            if (p == 0) p = 1;
             var pageSize = 6;
             var products = _context.Products.OrderByDescending(x => x.Id)
                     .Skip((p - 1) * pageSize)
