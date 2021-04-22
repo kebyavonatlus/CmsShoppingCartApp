@@ -1,5 +1,6 @@
 ﻿using CmsShoppingCart.Infrastructure;
 using CmsShoppingCart.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace CmsShoppingCart.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class CategoriesController : Controller
     {

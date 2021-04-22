@@ -4,9 +4,11 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using CmsShoppingCart.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CmsShoppingCart.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin")]
     [Area("Admin")]
     public class PagesController : Controller
     {
